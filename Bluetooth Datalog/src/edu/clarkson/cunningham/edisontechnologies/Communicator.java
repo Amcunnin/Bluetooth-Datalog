@@ -32,7 +32,7 @@ public class Communicator implements SerialPortEventListener {
     
     String logText = "";
     
-    public Communicator(GUI window){
+   public Communicator(GUI window){
     	this.window = window;
     }
     
@@ -49,6 +49,8 @@ public class Communicator implements SerialPortEventListener {
            if (curPort.getPortType() == CommPortIdentifier.PORT_SERIAL)
             {
             	System.out.println(curPort.getName());
+            	window.cboxPorts.addItem(curPort.getName());
+                portMap.put(curPort.getName(), curPort);
             }
         }
     }
