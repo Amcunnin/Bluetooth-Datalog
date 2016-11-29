@@ -70,14 +70,13 @@ public class Communicator implements SerialPortEventListener {
             serialPort = (SerialPort)commPort;
 
             //logging
-            logText = selectedPort + " opened successfully.";
             window.txtLog.setForeground(Color.black);
+            logText = selectedPort + " opened successfully.";
             window.txtLog.append(logText + "\n");
         }
         catch (PortInUseException e)
         {
             logText = selectedPort + " is in use. (" + e.toString() + ")";
-            
             window.txtLog.setForeground(Color.RED);
             window.txtLog.append(logText + "\n");
         }
@@ -100,7 +99,6 @@ public class Communicator implements SerialPortEventListener {
             input.close();
 
             logText = "Disconnected.";
-            window.txtLog.setForeground(Color.red);
             window.txtLog.append(logText + "\n");
         }
         catch (Exception e)
@@ -145,9 +143,31 @@ public class Communicator implements SerialPortEventListener {
         }
     }
     
-    @Override
-	public void serialEvent(SerialPortEvent arg0) {
-		
-	}
+    public void serialEvent(SerialPortEvent evt) {
+        if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
+        {
+            try
+            {
+                byte singleData = (byte)input.read();
+
+                if (singleData != 10)
+                {
+                    logText = new String(new byte[] {singleData});
+                    window.txtLog.append(logText);
+                }
+                else
+                {
+                    window.txtLog.append("\n");
+                }
+            }
+            catch (Exception e)
+            {
+                logText = "Failed to read data. (" + e.toString() + ")";
+                window.txtLog.setForeground(Color.red);
+                window.txtLog.append(logText + "\n");
+            }
+        }
+    }
+  
 
 }
