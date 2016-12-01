@@ -17,7 +17,16 @@ Communicator communicator = new Communicator(this);
         cboxPorts = new javax.swing.JComboBox();
         btnConnect = new javax.swing.JButton();
         btnDisconnect = new javax.swing.JButton();
+        btnDisconnect.setEnabled(false);
         txtLog = new javax.swing.JTextArea();
+        JLabel info1 = new JLabel("Info 1: ");
+        info11 = new javax.swing.JLabel();
+        JLabel info2 = new JLabel("Info 2: ");
+        info22 = new javax.swing.JLabel();
+        JLabel info3 = new JLabel("Info 3: ");
+        info33 = new javax.swing.JLabel();
+        JLabel info4 = new JLabel("Info 4: ");
+        info44 = new javax.swing.JLabel();
 
         setTitle("E.T. Data Logger");
         setLocation(400,300);
@@ -37,12 +46,16 @@ Communicator communicator = new Communicator(this);
                     }
                 });        
         
-                txtLog.setColumns(30);
-                txtLog.setEditable(false);
-                txtLog.setLineWrap(true);
-                txtLog.setRows(10);
-                txtLog.setFocusable(false);
-                jScrollPane1.setViewportView(txtLog);
+                txtLog = new JTextArea(10,30);
+                //txtLog.setColumns(30);
+               txtLog.setEditable(false);
+               // txtLog.setLineWrap(true);
+              //  txtLog.setRows(10);
+               // txtLog.setFocusable(false);
+               // jScrollPane1.getViewport().setView(txtLog);
+               JScrollPane scroll = new JScrollPane( txtLog );
+               scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+              
                 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -54,7 +67,15 @@ Communicator communicator = new Communicator(this);
         			.addComponent(btnDisconnect)
         			.addComponent(cboxPorts))
         		.addGroup(layout.createSequentialGroup()
-        			.addComponent(txtLog))
+        			.addComponent(scroll))
+        		.addGroup(layout.createSequentialGroup()
+        				.addComponent(info1).addComponent(info11))
+        		.addGroup(layout.createSequentialGroup()
+        				.addComponent(info2).addComponent(info22))
+        		.addGroup(layout.createSequentialGroup()
+        				.addComponent(info3).addComponent(info33))
+        		.addGroup(layout.createSequentialGroup()
+        				.addComponent(info4).addComponent(info44))
         		
         );
         
@@ -64,8 +85,18 @@ Communicator communicator = new Communicator(this);
         			.addComponent(btnConnect)
         			.addComponent(btnDisconnect)
         			.addComponent(cboxPorts))
-        		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE))
-        		.addComponent(txtLog)
+        		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        			.addComponent(scroll))
+        		.addGap(10)
+        		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        				.addComponent(info1).addComponent(info11))
+        		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        				.addComponent(info2).addComponent(info22))
+        		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        				.addComponent(info3).addComponent(info33))
+        		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        				.addComponent(info4).addComponent(info44))
+        	
         		
         );
         pack();
@@ -77,11 +108,17 @@ Communicator communicator = new Communicator(this);
             if (communicator.initIOStream() == true)
             {
                 communicator.initListener();
+                btnConnect.setEnabled(false);
+                btnDisconnect.setEnabled(true);
+                cboxPorts.setEnabled(false);
             }
 	}
             
    private void btnDisconnectActionPerformed(java.awt.event.ActionEvent evt) {
                 communicator.disconnect();
+                btnConnect.setEnabled(true);
+                cboxPorts.setEnabled(true);
+                btnDisconnect.setEnabled(false);
 	}
 	
 	// variable declaration
@@ -90,4 +127,8 @@ Communicator communicator = new Communicator(this);
     public javax.swing.JComboBox cboxPorts;
     public javax.swing.JTextArea txtLog;
     private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JLabel info11;
+    public javax.swing.JLabel info22;
+    public javax.swing.JLabel info33;
+    public javax.swing.JLabel info44;
 }

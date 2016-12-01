@@ -13,6 +13,7 @@ import java.util.TooManyListenersException;
 public class Communicator implements SerialPortEventListener {
 	
 	GUI window = null;
+	dataWrite log = new dataWrite();
 	
     //this is the object that contains the opened port
     private CommPortIdentifier selectedPortIdentifier = null;
@@ -52,6 +53,7 @@ public class Communicator implements SerialPortEventListener {
             	window.cboxPorts.addItem(curPort.getName());
                 portMap.put(curPort.getName(), curPort);
             }
+          
         }
     }
     
@@ -71,8 +73,11 @@ public class Communicator implements SerialPortEventListener {
 
             //logging
             window.txtLog.setForeground(Color.black);
-            logText = selectedPort + " opened successfully.";
+             logText = selectedPort + " opened successfully.";
             window.txtLog.append(logText + "\n");
+            
+            
+ 
         }
         catch (PortInUseException e)
         {
@@ -118,6 +123,7 @@ public class Communicator implements SerialPortEventListener {
             input = serialPort.getInputStream();
             
             successful = true;
+            log.initFile();
             return successful;
         }
         catch (IOException e) {
@@ -146,6 +152,10 @@ public class Communicator implements SerialPortEventListener {
     public void serialEvent(SerialPortEvent evt) {
         if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
         {
+        	window.info11.setText("N/A");
+        	window.info22.setText("N/A");
+        	window.info33.setText("N/A");
+        	window.info44.setText("N/A");
             try
             {
                 byte singleData = (byte)input.read();
