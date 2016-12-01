@@ -49,7 +49,6 @@ public class Communicator implements SerialPortEventListener {
             //get only serial ports
            if (curPort.getPortType() == CommPortIdentifier.PORT_SERIAL)
             {
-            	System.out.println(curPort.getName());
             	window.cboxPorts.addItem(curPort.getName());
                 portMap.put(curPort.getName(), curPort);
             }
@@ -75,6 +74,8 @@ public class Communicator implements SerialPortEventListener {
             window.txtLog.setForeground(Color.black);
              logText = selectedPort + " opened successfully.";
             window.txtLog.append(logText + "\n");
+            String test = "add this line";
+            log.addData(test);
             
             
  
