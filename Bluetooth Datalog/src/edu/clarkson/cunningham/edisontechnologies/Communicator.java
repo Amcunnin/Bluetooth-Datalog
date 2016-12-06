@@ -41,7 +41,6 @@ public class Communicator implements SerialPortEventListener {
     public void searchForPorts()
     {
         ports = CommPortIdentifier.getPortIdentifiers();
-        System.out.println("Available Com Ports:");
         while (ports.hasMoreElements())
         {
             CommPortIdentifier curPort = (CommPortIdentifier)ports.nextElement();
@@ -74,8 +73,6 @@ public class Communicator implements SerialPortEventListener {
             window.txtLog.setForeground(Color.black);
              logText = selectedPort + " opened successfully.";
             window.txtLog.append(logText + "\n");
-            String test = "add this line";
-            log.addData(test);
             
             
  
@@ -99,7 +96,8 @@ public class Communicator implements SerialPortEventListener {
         //close the serial port
         try
         {
-
+        	log.addData("firstline");
+        	log.addData("secondline");
             serialPort.removeEventListener();
             serialPort.close();
             input.close();

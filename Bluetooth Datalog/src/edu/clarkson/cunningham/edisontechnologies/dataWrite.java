@@ -1,7 +1,9 @@
 package edu.clarkson.cunningham.edisontechnologies;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
 import java.io.BufferedWriter;
 import java.util.Date;
 import java.sql.Timestamp;
@@ -29,7 +31,7 @@ public class dataWrite {
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd__hh_mm_ss");
 		String filename = "log_"+format.format(date);
-		file = filename+".txt";
+		file = "C://Users/ulab/Desktop/DataLogs/"+filename+".txt";
 		//Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		try{
 			File file = new File("C://Users/ulab/Desktop/DataLogs/"+filename+".txt");
@@ -46,12 +48,19 @@ public class dataWrite {
 	
 	public void addData(String data){
 		try{
-
-			FileWriter fw = new FileWriter(file, true);
+			FileWriter fw = new FileWriter(file,true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(data);
+			bw.newLine();
 			bw.close();
 	    	System.out.println("file appended");
+			/*System.out.println(file);
+			File fout = new File("C://Users/ulab/Desktop/DataLogs/lastlog.txt");
+			FileOutputStream fos = new FileOutputStream(fout);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			osw.write(data);
+			osw.write("something");
+			osw.close();*/
 			
 		}catch(Exception e){
 			System.out.println("file write exception");
