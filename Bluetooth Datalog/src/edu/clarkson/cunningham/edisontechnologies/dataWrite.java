@@ -38,6 +38,7 @@ public class dataWrite {
 			if(!file.exists()){
 				file.createNewFile();
 				System.out.println("\nFile Created: "+filename+".txt");
+				addData("Opmode\tDirection\tDistance\tT.Distance\tSpeed(ft/s)");
 			}
 			
 		}
@@ -54,14 +55,6 @@ public class dataWrite {
 			bw.newLine();
 			bw.close();
 	    	System.out.println("file appended");
-			/*System.out.println(file);
-			File fout = new File("C://Users/ulab/Desktop/DataLogs/lastlog.txt");
-			FileOutputStream fos = new FileOutputStream(fout);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			osw.write(data);
-			osw.write("something");
-			osw.close();*/
-			
 		}catch(Exception e){
 			System.out.println("file write exception");
 		}

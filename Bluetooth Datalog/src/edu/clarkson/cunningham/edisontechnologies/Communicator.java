@@ -2,8 +2,11 @@ package edu.clarkson.cunningham.edisontechnologies;
 
 import gnu.io.*;
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.TooManyListenersException;
@@ -44,6 +47,7 @@ public class Communicator implements SerialPortEventListener {
         while (ports.hasMoreElements())
         {
             CommPortIdentifier curPort = (CommPortIdentifier)ports.nextElement();
+            System.out.println(curPort.getName());
 
             //get only serial ports
            if (curPort.getPortType() == CommPortIdentifier.PORT_SERIAL)
@@ -51,8 +55,8 @@ public class Communicator implements SerialPortEventListener {
             	window.cboxPorts.addItem(curPort.getName());
                 portMap.put(curPort.getName(), curPort);
             }
-          
         }
+        
     }
     
     public void connect()
@@ -96,14 +100,13 @@ public class Communicator implements SerialPortEventListener {
         //close the serial port
         try
         {
-        	log.addData("firstline");
-        	log.addData("secondline");
             serialPort.removeEventListener();
             serialPort.close();
             input.close();
 
             logText = "Disconnected.";
             window.txtLog.append(logText + "\n");
+            
         }
         catch (Exception e)
         {
@@ -150,27 +153,32 @@ public class Communicator implements SerialPortEventListener {
     
     public void serialEvent(SerialPortEvent evt) {
         if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
-        {
-        	window.info11.setText("N/A");
-        	window.info22.setText("N/A");
-        	window.info33.setText("N/A");
-        	window.info44.setText("N/A");
+        { String[] info = {"N/A","N/A","N/A","N/A","N/A"};
             try
             {
-                byte singleData = (byte)input.read();
-
-                if (singleData != 10)
-                {
-                    logText = new String(new byte[] {singleData});
-                    window.txtLog.append(logText);
-                }
-                else
-                {
-                    window.txtLog.append("\n");
-                }
+            	 BufferedReader portReader = new BufferedReader (
+            			 new InputStreamReader(serialPort.getInputStream()));
+            	 String inputLine = portReader.readLine();
+            	 System.out.println(inputLine);
+            	info = inputLine.split("\\s+");
+            	info[4]=info[4].substring(0,info[4].length()-1);
+            	window.info11.setText(info[0]);
+            	window.info22.setText(info[1]);
+            	window.info33.setText(info[2]);
+            	window.info44.setText(info[3]);
+            	window.info55.setText(info[4]);
+            	//String inData = Arrays.toString(info);
+            	String inData = info[0]+"\t"+info[1]+"\t\t"+info[2]+"\t\t"+info[3]+"\t\t"+info[4];
+            	log.addData(inData);
             }
             catch (Exception e)
             {
+            	window.info11.setText("N/A");
+            	window.info22.setText("N/A");
+            	window.info33.setText("N/A");
+            	window.info44.setText("N/A");
+            	window.info55.setText("N/A");
+            	
                 logText = "Failed to read data. (" + e.toString() + ")";
                 window.txtLog.setForeground(Color.red);
                 window.txtLog.append(logText + "\n");

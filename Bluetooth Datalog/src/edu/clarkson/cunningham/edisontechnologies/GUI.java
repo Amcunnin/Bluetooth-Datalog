@@ -19,14 +19,16 @@ Communicator communicator = new Communicator(this);
         btnDisconnect = new javax.swing.JButton();
         btnDisconnect.setEnabled(false);
         txtLog = new javax.swing.JTextArea();
-        JLabel info1 = new JLabel("Info 1: ");
+        JLabel info1 = new JLabel("Opmode:    ");
         info11 = new javax.swing.JLabel();
-        JLabel info2 = new JLabel("Info 2: ");
+        JLabel info2 = new JLabel("Direction: ");
         info22 = new javax.swing.JLabel();
-        JLabel info3 = new JLabel("Info 3: ");
+        JLabel info3 = new JLabel("Distance:  ");
         info33 = new javax.swing.JLabel();
-        JLabel info4 = new JLabel("Info 4: ");
+        JLabel info4 = new JLabel("Dis. Traveled: ");
         info44 = new javax.swing.JLabel();
+        JLabel info5 = new JLabel("Speed (ft/s):  ");
+        info55 = new javax.swing.JLabel();
 
         setTitle("E.T. Data Logger");
         setLocation(400,300);
@@ -46,7 +48,7 @@ Communicator communicator = new Communicator(this);
                     }
                 });        
         
-                txtLog = new JTextArea(10,30);
+                txtLog = new JTextArea(15,40);
                 //txtLog.setColumns(30);
                txtLog.setEditable(false);
                // txtLog.setLineWrap(true);
@@ -76,6 +78,8 @@ Communicator communicator = new Communicator(this);
         				.addComponent(info3).addComponent(info33))
         		.addGroup(layout.createSequentialGroup()
         				.addComponent(info4).addComponent(info44))
+        		.addGroup(layout.createSequentialGroup()
+        				.addComponent(info5).addComponent(info55))
         		
         );
         
@@ -96,6 +100,8 @@ Communicator communicator = new Communicator(this);
         				.addComponent(info3).addComponent(info33))
         		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
         				.addComponent(info4).addComponent(info44))
+        		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        				.addComponent(info5).addComponent(info55))
         	
         		
         );
@@ -131,4 +137,5 @@ Communicator communicator = new Communicator(this);
     public javax.swing.JLabel info22;
     public javax.swing.JLabel info33;
     public javax.swing.JLabel info44;
+    public javax.swing.JLabel info55;
 }
